@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import javax.swing.*;
 import java.io.File;
 
 
@@ -21,11 +22,11 @@ public class backendLoginTest {
     public static void main(String[] args) {
         backendLoginTest bt = new backendLoginTest();
         String url = "http://www.cigage.com:9999/xnlottery/resources/backendLogin.jsp";
-        for (int i = 0; i < 10; i++) {
+//        for (int i = 0; i < 10; i++) {
             WebDriver dr = bt.getDriver();
             dr.get(url);
             bt.jspTest(dr);
-        }
+  //      }
     }
 
     public WebDriver getDriver() {
@@ -48,5 +49,10 @@ public class backendLoginTest {
         phoneBox.sendKeys("18697265816");
         WebElement sendSMS = dr.findElement(By.className("send_vcode"));
         sendSMS.click();
+        String sttringSMS = JOptionPane.showInputDialog("收到的短信验证码");
+        WebElement inputSMS = dr.findElement(By.name("checkCode"));
+        inputSMS.sendKeys(sttringSMS);
+        WebElement submitButton = dr.findElement(By.xpath("/html/body/div[1]/form/button[2]"));
+        submitButton.click();
     }
 }
