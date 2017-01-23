@@ -21,14 +21,20 @@ public class backendLoginTest {
 
     public static void main(String[] args) {
         backendLoginTest bt = new backendLoginTest();
-        String url = "http://www.cigage.com:9999/xnlottery/resources/backendLogin.jsp";
-//        for (int i = 0; i < 10; i++) {
+        String url_web = "http://www.cigage.com:9999/xnlottery/resources/backendLogin.jsp";
+        String url_wechat = "http://http://wellot.wind4us.com:8080/xnlottery/resources/wechat/bind/bind.jsp";
+//          for (int i = 0; i < 10; i++) {
             WebDriver dr = bt.getDriver();
-            dr.get(url);
-            bt.jspTest(dr);
+            dr.get(url_wechat);
+//            dr.get(url_web);
+//            bt.jspTest(dr);
   //      }
     }
 
+    public  void wechat_jspTest(WebDriver dr){
+        WebElement name = dr.findElement(By.name("signContractName"));
+        name.sendKeys("李科");
+    }
     public WebDriver getDriver() {
         service = new ChromeDriverService.Builder()
                 .usingDriverExecutable(new File("chromedriver.exe"))
