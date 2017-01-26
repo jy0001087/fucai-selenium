@@ -20,8 +20,9 @@ public class mainTest {
         mainTest test = new mainTest();
         LinkedHashMap<String,String> WebElementMap = new LinkedHashMap();
         WebDriver driver = test.getDriver();
-        WebElementMap.put("url","http://wellot.wind4us.com:8080/xnlottery/resources/wechat/bind/bind.jsp");
-        WebElementMap.put("name","signContractName:李科");
+        //WebElementMap.put("url","http://wellot.wind4us.com:8080/xnlottery/resources/wechat/bind/bind.jsp");
+        //WebElementMap.put("name","signContractName:李科");
+
         test.jspTest(WebElementMap,driver);
 
     }
