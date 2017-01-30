@@ -1,4 +1,10 @@
 {
-      "url":"http://wellot.wind4us.com:8080/xnlottery/resources/wechat/bind/bind.jsp",
-      "name":[{"target":"signContractName","sendKey":"李科"}]
- }
+  "url": "http://wellot.wind4us.com:8080/xnlottery/resources/wechat/bind/bind.jsp",
+  "content": [
+    {
+      "labelFindWay": "name",
+      "labelTarget": "signContractName",
+      "labelsendKey": "李科"
+    }
+  ]
+}
