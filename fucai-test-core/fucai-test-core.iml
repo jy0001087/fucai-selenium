@@ -65,5 +65,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.24" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.1.9" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.22" level="project" />
   </component>
 </module>

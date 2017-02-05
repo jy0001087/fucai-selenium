@@ -15,10 +15,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Iterator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Created by Bud on 2017/1/25.
  */
 public class mainTest {
+    static final Logger logger=LoggerFactory.getLogger(mainTest.class);
     private static ChromeDriverService service;
     public static void main(String[] args){
         mainTest test = new mainTest();
@@ -35,6 +38,7 @@ public class mainTest {
             WebContent content = metaDate.getContent().get(0);
             System.out.print(content.getLabelTarget());
         }catch(Exception e){
+            logger.error("json file not found or press error accerd.");
             e.printStackTrace();
         }
         return metaDate;
@@ -43,8 +47,11 @@ public class mainTest {
     public String jspTest(WellotRegistBean jsonbean,WebDriver driver){
         String url = jsonbean.getUrl();
         if (url!=null&&url!=""){
-        driver.get(url);}
+        driver.get(url);
+        logger.info("start testing url :{}",url);
+        }
         else{
+            logger.error("fail:url is not defined");
             return "fail:url is not defined";
         }
         for(Iterator<WebContent>  i=jsonbean.getContent().iterator();i.hasNext();){
