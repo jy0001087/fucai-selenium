@@ -15,6 +15,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -106,7 +107,6 @@ public class mainTest {
                 element.click();
                 Thread.sleep(2000);
                 element.click();
-                Thread.sleep(2000);
                 return false;
             case "sleep":
                 element.click();
@@ -153,6 +153,7 @@ public class mainTest {
 
     public boolean orderController() throws Exception{
         WebDriver driver = this.getDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         JspOrderBean order = this.readJspOrder();
         for(Iterator<String> jsonfile= order.getJspOrder().iterator();jsonfile.hasNext();){
             String filelocation = "/jsp/"+jsonfile.next();
@@ -166,4 +167,5 @@ public class mainTest {
         }
         return true;
     }
+
 }
