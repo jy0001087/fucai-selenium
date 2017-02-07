@@ -17,12 +17,16 @@ import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+
 /**
  * Created by Bud on 2017/1/25.
  */
 public class mainTest {
     static final Logger logger=LoggerFactory.getLogger(mainTest.class);
     private static ChromeDriverService service;
+    private static String SMSauthCode;
     public static void main(String[] args){
         mainTest test = new mainTest();
         WebDriver driver = test.getDriver();
@@ -33,12 +37,10 @@ public class mainTest {
     public WellotRegistBean readJSON(){
         WellotRegistBean metaDate =null;
         try{
-            InputStream in = this.getClass().getResourceAsStream("/jsp/wellot_regiest.json");
+            InputStream in = this.getClass().getResourceAsStream("/jsp/1_Login.json");
             metaDate = JSON.parseObject(IOUtils.toString(in,"utf-8"),WellotRegistBean.class);
-            WebContent content = metaDate.getContent().get(0);
-            System.out.print(content.getLabelTarget());
         }catch(Exception e){
-            logger.error("json file not found or press error accerd.");
+            logger.error("json file not found or press error accerd. /n  {} ",e.toString());
             e.printStackTrace();
         }
         return metaDate;
@@ -60,19 +62,26 @@ public class mainTest {
             switch(labelFindWay) {
                 case "name":
                     WebElement name = driver.findElement(By.name(label.getLabelTarget()));
-                    name.sendKeys(label.getLabelsendKey());
+                    if(setSMSauthCode(name,label.getLabelsendKey())){
+                    name.sendKeys(label.getLabelsendKey());}
                     break;
                 case "id":
                     WebElement id = driver.findElement(By.id(label.getLabelTarget()));
-                    id.sendKeys(label.getLabelsendKey());
+                    if(setSMSauthCode(id,label.getLabelsendKey())){
+                    id.sendKeys(label.getLabelsendKey());}
                     break;
                 case "xpath":
                     WebElement xpath = driver.findElement(By.xpath(label.getLabelTarget()));
-                    xpath.sendKeys(label.getLabelsendKey());
+                    if(setSMSauthCode(xpath,label.getLabelsendKey())){
+                    xpath.sendKeys(label.getLabelsendKey());}
                     break;
+                //如果是短息验证码输入按钮，则弹出对话框输入收到的短信验证码，保存全局变量SMSauthCode
                 case "button":
                     WebElement button = driver.findElement(By.xpath(label.getLabelTarget()));
                     button.click();
+                    if(label.getLabelsendKey().equals("SMSauthCode")){
+                        SMSauthCode = JOptionPane.showInputDialog("收到的短息你验证码为");
+                    }
                     break;
             }
         }
@@ -92,5 +101,14 @@ public class mainTest {
         WebDriver dr = new RemoteWebDriver(service.getUrl(),
                 DesiredCapabilities.chrome());
         return dr;
+    }
+//json中labelsendKey值等于SMSauthCode的非button类即为输入短信验证码的element，判断后取全局变量输入。
+    public boolean setSMSauthCode(WebElement element,String labelsendKey){
+        if(labelsendKey.equals("SMSauthCode")){
+            element.sendKeys(SMSauthCode);
+            return false;}
+        else {
+            return true;
+        }
     }
 }

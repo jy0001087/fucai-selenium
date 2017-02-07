@@ -1,0 +1,25 @@
+{
+"url": "http://wellot.wind4us.com:8080/xnlottery/resources/wechatLogin.jsp",
+"content": [
+{
+"labelFindWay": "name",
+"labelTarget": "phoneNum",
+"labelsendKey": "18697265816"
+},
+  {
+    "labelFindWay": "button",
+    "labelTarget": "//*[@id=\"login_form\"]/div[1]/div[2]/div[3]/button",
+    "labelsendKey": "SMSauthCode"
+  },
+  {
+    "labelFindWay": "name",
+    "labelTarget": "checkCode",
+    "labelsendKey": "SMSauthCode"
+  },
+  {
+    "labelFindWay": "button",
+    "labelTarget": "//*[@id=\"showTooltips\"]",
+    "labelsendKey": ""
+  }
+]
+}
