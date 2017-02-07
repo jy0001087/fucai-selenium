@@ -46,10 +46,11 @@ public class mainTest {
         return metaDate;
     }
 
-    public String jspTest(WellotRegistBean jsonbean,WebDriver driver){
+    public String jspTest(WellotRegistBean jsonbean,WebDriver driver) throws Exception{
         for(Iterator<WebContent>  i=jsonbean.getContent().iterator();i.hasNext();){
             WebContent label = i.next();
             String labelFindWay = label.getLabelFindWay();
+            logger.trace("==== process element {}",label.getLabelTarget());
             switch(labelFindWay) {
                 case "name":
                     WebElement name = driver.findElement(By.name(label.getLabelTarget()));
@@ -69,8 +70,10 @@ public class mainTest {
                 //如果是短息验证码输入按钮，则弹出对话框输入收到的短信验证码，保存全局变量SMSauthCode
                 case "button":
                     WebElement button = driver.findElement(By.xpath(label.getLabelTarget()));
-                    button.click();
-                    if(label.getLabelsendKey().equals("SMSauthCode")){
+                    if(setSMSauthCode(button,label.getLabelsendKey())){
+                        button.click();
+                    }
+                    if(label.getLabelsendKey().equals("getSMSauthCode")){
                         SMSauthCode = JOptionPane.showInputDialog("收到的短息你验证码为");
                     }
                     break;
@@ -94,12 +97,23 @@ public class mainTest {
         return dr;
     }
 //json中labelsendKey值等于SMSauthCode的非button类即为输入短信验证码的element，判断后取全局变量输入。
-    public boolean setSMSauthCode(WebElement element,String labelsendKey){
-        if(labelsendKey.equals("SMSauthCode")){
-            element.sendKeys(SMSauthCode);
-            return false;}
-        else {
-            return true;
+    public boolean setSMSauthCode(WebElement element,String labelsendKey) throws Exception{
+        switch (labelsendKey) {
+            case "SMSauthCode":
+                element.sendKeys(SMSauthCode);
+                return false;
+            case "doubleclick":
+                element.click();
+                Thread.sleep(2000);
+                element.click();
+                Thread.sleep(2000);
+                return false;
+            case "sleep":
+                element.click();
+                Thread.sleep(2000);
+                return false;
+            default:
+                return true;
         }
     }
 

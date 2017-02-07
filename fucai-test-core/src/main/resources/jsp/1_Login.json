@@ -9,7 +9,7 @@
   {
     "labelFindWay": "button",
     "labelTarget": "//*[@id=\"login_form\"]/div[1]/div[2]/div[3]/button",
-    "labelsendKey": "SMSauthCode"
+    "labelsendKey": "getSMSauthCode"
   },
   {
     "labelFindWay": "name",
@@ -19,7 +19,7 @@
   {
     "labelFindWay": "button",
     "labelTarget": "//*[@id=\"showTooltips\"]",
-    "labelsendKey": ""
+    "labelsendKey": "click"
   }
 ]
 }
