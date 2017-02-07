@@ -1,0 +1,10 @@
+{
+  "url": "http://wellot.wind4us.com:8080/xnlottery/resources/wechat/payment/payment.jsp",
+  "content": [
+    {
+      "labelFindWay": "name",
+      "labelTarget": "bettingShopNo",
+      "labelsendKey": "63010006"
+    }
+  ]
+}
