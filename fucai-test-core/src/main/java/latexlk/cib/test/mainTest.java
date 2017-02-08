@@ -55,28 +55,29 @@ public class mainTest {
             switch(labelFindWay) {
                 case "name":
                     WebElement name = driver.findElement(By.name(label.getLabelTarget()));
-                    if(setSMSauthCode(name,label.getLabelsendKey())){
+                    if(beforeSendKey(name,label.getLabelsendKey())){
                     name.sendKeys(label.getLabelsendKey());}
+                    this.afterSendKey(label.getLabelsendKey());
                     break;
                 case "id":
                     WebElement id = driver.findElement(By.id(label.getLabelTarget()));
-                    if(setSMSauthCode(id,label.getLabelsendKey())){
+                    if(beforeSendKey(id,label.getLabelsendKey())){
                     id.sendKeys(label.getLabelsendKey());}
+                    this.afterSendKey(label.getLabelsendKey());
                     break;
                 case "xpath":
                     WebElement xpath = driver.findElement(By.xpath(label.getLabelTarget()));
-                    if(setSMSauthCode(xpath,label.getLabelsendKey())){
+                    if(beforeSendKey(xpath,label.getLabelsendKey())){
                     xpath.sendKeys(label.getLabelsendKey());}
+                    this.afterSendKey(label.getLabelsendKey());
                     break;
                 //如果是短息验证码输入按钮，则弹出对话框输入收到的短信验证码，保存全局变量SMSauthCode
                 case "button":
                     WebElement button = driver.findElement(By.xpath(label.getLabelTarget()));
-                    if(setSMSauthCode(button,label.getLabelsendKey())){
+                    if(beforeSendKey(button,label.getLabelsendKey())){
                         button.click();
                     }
-                    if(label.getLabelsendKey().equals("getSMSauthCode")){
-                        SMSauthCode = JOptionPane.showInputDialog("收到的短息你验证码为");
-                    }
+                    this.afterSendKey(label.getLabelsendKey());
                     break;
             }
         }
@@ -98,7 +99,7 @@ public class mainTest {
         return dr;
     }
 //json中labelsendKey值等于SMSauthCode的非button类即为输入短信验证码的element，判断后取全局变量输入。
-    public boolean setSMSauthCode(WebElement element,String labelsendKey) throws Exception{
+    public boolean beforeSendKey(WebElement element,String labelsendKey) throws Exception{
         switch (labelsendKey) {
             case "SMSauthCode":
                 element.sendKeys(SMSauthCode);
@@ -109,8 +110,11 @@ public class mainTest {
                 element.click();
                 return false;
             case "sleep":
+                Thread.sleep(10000);
+                return true;
+            case "getSMSauthCode":
                 element.click();
-                Thread.sleep(2000);
+                SMSauthCode = JOptionPane.showInputDialog("收到的短息你验证码为");
                 return false;
             default:
                 return true;
@@ -153,7 +157,7 @@ public class mainTest {
 
     public boolean orderController() throws Exception{
         WebDriver driver = this.getDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         JspOrderBean order = this.readJspOrder();
         for(Iterator<String> jsonfile= order.getJspOrder().iterator();jsonfile.hasNext();){
             String filelocation = "/jsp/"+jsonfile.next();
@@ -168,4 +172,13 @@ public class mainTest {
         return true;
     }
 
+    public void afterSendKey(String labelsendKey) throws Exception{
+        switch (labelsendKey){
+            case "sleepAfter":
+                Thread.sleep(5000);
+                break;
+            default:
+                break;
+        }
+    }
 }

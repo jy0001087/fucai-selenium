@@ -34,11 +34,16 @@
     {
       "labelFindWay": "button",
       "labelTarget": "//*[@id=\"payment_form\"]/div[3]/a",
-      "labelsendKey": "sleep"
+      "labelsendKey": "click"
     },
     {
       "labelFindWay": "button",
       "labelTarget": "/html/body/div[4]/div[3]/a[2]",
+      "labelsendKey": "sleepAfter"
+    },
+    {
+      "labelFindWay": "button",
+      "labelTarget": "/html/body/div[4]/div[3]/a",
       "labelsendKey": "click"
     }
   ]
