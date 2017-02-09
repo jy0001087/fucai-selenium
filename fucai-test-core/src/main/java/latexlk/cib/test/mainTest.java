@@ -14,6 +14,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -121,9 +122,16 @@ public class mainTest {
         }
     }
 
-    public boolean jspRedirect(WebDriver driver,WellotRegistBean jspBean) throws Exception{
+    /**
+     * 控制当前显示页面的url地址，传入order.json中的次序用以判断是否为新一轮的测试。
+     * @param driver
+     * @param jspBean
+     * @return
+     * @throws Exception
+     */
+    public boolean jspRedirect(WebDriver driver,WellotRegistBean jspBean,int jsonOrder) throws Exception{
         logger.info("entry jspRedirect jspBean url is {}",jspBean.getUrl());
-        if(driver.getCurrentUrl().equals("data:,")) {
+        if(driver.getCurrentUrl().equals("data:,") || jsonOrder==0) {
             String url = jspBean.getUrl();
             if (url != null && url != "") {
                 driver.get(url);
@@ -159,15 +167,26 @@ public class mainTest {
         WebDriver driver = this.getDriver();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         JspOrderBean order = this.readJspOrder();
-        for(Iterator<String> jsonfile= order.getJspOrder().iterator();jsonfile.hasNext();){
-            String filelocation = "/jsp/"+jsonfile.next();
+        ArrayList<String> jsonOrder=order.getJspOrder();
+        int totalCount=-1;
+        while(totalCount <1){
+        try {
+             totalCount = Integer.parseInt(JOptionPane.showInputDialog("要测试几次"));
+        }catch (Exception e) {
+            totalCount = Integer.parseInt(JOptionPane.showInputDialog("输入数字啊亲，要测几次"));
+        }
+        }
+        for(int currentCount = 0;currentCount<totalCount;currentCount++){
+        for(int index=0;index<jsonOrder.size();index++){
+            String filelocation = "/jsp/"+jsonOrder.get(index);
             logger.info("json location is {}",filelocation);
             WellotRegistBean jspBean = this.readJSON(filelocation);
-            if(!this.jspRedirect(driver,jspBean)){
+            if(!this.jspRedirect(driver,jspBean,index)){
                 return false;
             }else{
                 this.jspTest(jspBean,driver);
             }
+        }
         }
         return true;
     }
