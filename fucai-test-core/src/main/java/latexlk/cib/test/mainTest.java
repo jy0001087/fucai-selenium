@@ -123,7 +123,7 @@ public class mainTest {
     }
 
     /**
-     * 控制当前显示页面的url地址，传入order.json中的次序用以判断是否为新一轮的测试。
+     * 控制当前显示页面的url地址，传入order.json中的数组的次序用以判断是否为新一轮的测试。
      * @param driver
      * @param jspBean
      * @return
